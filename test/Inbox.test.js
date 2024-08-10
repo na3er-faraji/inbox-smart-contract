@@ -18,12 +18,19 @@ beforeEach(async () => {
 })
 
 describe('Inbox', () => {
-  it('Deploys a contract', () => {
+  it('deploys a contract', () => {
     assert.ok(inbox.options.address)
   })
 
-  it('Has a default message', async () => {
+  it('has a default message', async () => {
     const msg = await inbox.methods.message().call()
     assert.strictEqual(msg, message)
+  })
+
+  it('can change the message', async () => {
+    const newMessage = 'new message!'
+    await inbox.methods.setMessage(newMessage).send({from: accounts[0]})
+    const msg = await inbox.methods.message().call()
+    assert.strictEqual(msg, newMessage)
   })
 })

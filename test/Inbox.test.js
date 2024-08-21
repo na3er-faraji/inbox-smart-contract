@@ -11,7 +11,6 @@ let inbox
 
 beforeEach(async () => {
   accounts = await web3.eth.getAccounts()
-
   inbox = await new web3.eth.Contract(abi)
     .deploy({ data: '0x' + evm.bytecode.object, arguments: [message] })
     .send({ from: accounts[0], gas: '1000000' })
@@ -29,7 +28,7 @@ describe('Inbox', () => {
 
   it('can change the message', async () => {
     const newMessage = 'new message!'
-    await inbox.methods.setMessage(newMessage).send({from: accounts[0]})
+    await inbox.methods.setMessage(newMessage).send({ from: accounts[0] })
     const msg = await inbox.methods.message().call()
     assert.strictEqual(msg, newMessage)
   })
